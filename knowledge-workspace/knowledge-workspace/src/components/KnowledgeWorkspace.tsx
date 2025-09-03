@@ -461,10 +461,7 @@ export default function KnowledgeWorkspace() {
     return (
       <div className="p-6">
         <Card>
-          <CardHeader>
-            <CardTitle className="text-base text-slate-700">本文</CardTitle>
-          </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             {selectedNote.content ? (
               <div className="prose prose-slate max-w-none leading-7">
                 <ReactMarkdown
@@ -550,6 +547,11 @@ export default function KnowledgeWorkspace() {
                     <ol className="list-decimal list-inside space-y-1 my-3" {...props}>
                       {children}
                     </ol>
+                  ),
+                  li: ({ children, ...props }) => (
+                    <li className="break-words overflow-hidden text-ellipsis max-w-full" {...props}>
+                      <span className="block truncate pr-2">{children}</span>
+                    </li>
                   ),
                   table: ({ children, ...props }) => (
                     <div className="overflow-x-auto">
@@ -847,6 +849,11 @@ export default function KnowledgeWorkspace() {
                             <ol className="list-decimal list-inside my-4 space-y-2" {...props}>
                               {children}
                             </ol>
+                          ),
+                          li: ({ children, ...props }) => (
+                            <li className="break-words overflow-hidden text-ellipsis max-w-full" {...props}>
+                              <span className="block truncate pr-2">{children}</span>
+                            </li>
                           ),
                           img: ({ src, alt, ...props }) => {
                             const { width, height, ...imageProps } = props;
