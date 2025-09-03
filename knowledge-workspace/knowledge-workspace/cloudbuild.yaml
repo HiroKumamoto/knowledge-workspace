@@ -1,6 +1,13 @@
 steps:
+  # Copy Dockerfile to root for build context  
+  - name: 'ubuntu'
+    args: ['cp', 'knowledge-workspace/knowledge-workspace/Dockerfile', './']
+  # Copy app files to build context
+  - name: 'ubuntu' 
+    args: ['cp', '-r', 'knowledge-workspace/knowledge-workspace/', './app/']
+  # Build with Dockerfile in root
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/knowledge-workspace', '-f', 'knowledge-workspace/knowledge-workspace/Dockerfile', 'knowledge-workspace/knowledge-workspace']
+    args: ['build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/knowledge-workspace', '-f', 'Dockerfile', './app']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/knowledge-workspace']
 

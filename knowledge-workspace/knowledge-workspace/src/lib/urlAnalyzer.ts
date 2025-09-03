@@ -5,7 +5,7 @@ export async function analyzeUrl(url: string): Promise<{
 }> {
   try {
     // URLの妥当性をチェック
-    const urlObj = new URL(url);
+    new URL(url);
     
     // フロントエンドからAPIルートを呼び出す
     const response = await fetch('/api/analyze-url', {

@@ -1,7 +1,7 @@
 "use client";
-import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
-import { Plus, Edit3, Trash2, Search, FolderPlus, Save, X, Check, ChevronDown, XCircle } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
+import { Plus, Edit3, Trash2, FolderPlus, Save, X, Check, ChevronDown, XCircle } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
@@ -12,7 +12,7 @@ import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,7 +36,7 @@ type Project = {
 };
 
 // --- Helpers
-const uid = () => (globalThis.crypto?.randomUUID?.() ?? `id_${Date.now()}_${Math.random().toString(36).slice(2)}`);
+// const uid = () => (globalThis.crypto?.randomUUID?.() ?? `id_${Date.now()}_${Math.random().toString(36).slice(2)}`);
 const fmtDate = (ms: number) => new Date(ms).toLocaleString();
 
 // Database helper functions
@@ -197,7 +197,7 @@ async function uploadImage(file: File): Promise<string | null> {
     const fileExt = file.name.split('.').pop();
     const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
 
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from('images')
       .upload(fileName, file);
 
@@ -401,7 +401,7 @@ export default function KnowledgeWorkspace() {
     );
   }
 
-  const Sidebar = React.memo(() => {
+  const Sidebar = React.memo(function Sidebar() {
     return (
       <div className="w-full md:w-80 border-l bg-white">
         <div className="p-3">
@@ -483,11 +483,12 @@ export default function KnowledgeWorkspace() {
                     </a>
                   ),
                   img: ({ src, alt, ...props }) => (
-                    <img
-                      src={src}
-                      alt={alt}
+                    <Image
+                      src={src || ''}
+                      alt={alt || ''}
+                      width={800}
+                      height={600}
                       className="max-w-full h-auto rounded-lg shadow-sm my-4"
-                      loading="lazy"
                       {...props}
                     />
                   ),
@@ -845,11 +846,12 @@ export default function KnowledgeWorkspace() {
                             </ol>
                           ),
                           img: ({ src, alt, ...props }) => (
-                            <img
-                              src={src}
-                              alt={alt}
+                            <Image
+                              src={src || ''}
+                              alt={alt || ''}
+                              width={800}
+                              height={600}
                               className="max-w-full h-auto rounded-lg shadow-sm my-4"
-                              loading="lazy"
                               {...props}
                             />
                           ),

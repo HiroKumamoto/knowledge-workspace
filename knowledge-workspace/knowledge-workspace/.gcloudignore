@@ -1,0 +1,10 @@
+.git
+.gitignore
+README.md
+.dockerignore
+node_modules
+npm-debug.log
+.nyc_output
+.env.local
+.next
+.DS_Store
