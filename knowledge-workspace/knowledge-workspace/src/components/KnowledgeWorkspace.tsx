@@ -484,7 +484,7 @@ export default function KnowledgeWorkspace() {
                   ),
                   img: ({ src, alt, ...props }) => (
                     <Image
-                      src={src || ''}
+                      src={typeof src === 'string' ? src : ''}
                       alt={alt || ''}
                       width={800}
                       height={600}
@@ -847,7 +847,7 @@ export default function KnowledgeWorkspace() {
                           ),
                           img: ({ src, alt, ...props }) => (
                             <Image
-                              src={src || ''}
+                              src={typeof src === 'string' ? src : ''}
                               alt={alt || ''}
                               width={800}
                               height={600}
