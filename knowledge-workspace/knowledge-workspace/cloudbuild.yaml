@@ -1,7 +1,6 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/knowledge-workspace', '.']
-    dir: 'knowledge-workspace/knowledge-workspace'
+    args: ['build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/knowledge-workspace', '-f', 'knowledge-workspace/knowledge-workspace/Dockerfile', 'knowledge-workspace/knowledge-workspace']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/knowledge-workspace']
 
