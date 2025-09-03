@@ -482,16 +482,19 @@ export default function KnowledgeWorkspace() {
                       {children}
                     </a>
                   ),
-                  img: ({ src, alt, ...props }) => (
-                    <Image
-                      src={typeof src === 'string' ? src : ''}
-                      alt={alt || ''}
-                      width={800}
-                      height={600}
-                      className="max-w-full h-auto rounded-lg shadow-sm my-4"
-                      {...props}
-                    />
-                  ),
+                  img: ({ src, alt, ...props }) => {
+                    const { width, height, ...imageProps } = props;
+                    return (
+                      <Image
+                        src={typeof src === 'string' ? src : ''}
+                        alt={alt || ''}
+                        width={800}
+                        height={600}
+                        className="max-w-full h-auto rounded-lg shadow-sm my-4"
+                        {...imageProps}
+                      />
+                    );
+                  },
                   code: ({ className, children, ...props }) => {
                     const match = /language-(\w+)/.exec(className || '');
                     return match ? (
@@ -845,16 +848,19 @@ export default function KnowledgeWorkspace() {
                               {children}
                             </ol>
                           ),
-                          img: ({ src, alt, ...props }) => (
-                            <Image
-                              src={typeof src === 'string' ? src : ''}
-                              alt={alt || ''}
-                              width={800}
-                              height={600}
-                              className="max-w-full h-auto rounded-lg shadow-sm my-4"
-                              {...props}
-                            />
-                          ),
+                          img: ({ src, alt, ...props }) => {
+                            const { width, height, ...imageProps } = props;
+                            return (
+                              <Image
+                                src={typeof src === 'string' ? src : ''}
+                                alt={alt || ''}
+                                width={800}
+                                height={600}
+                                className="max-w-full h-auto rounded-lg shadow-sm my-4"
+                                {...imageProps}
+                              />
+                            );
+                          },
                         }}
                       >
                         {previewContent}
