@@ -15,7 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { analyzeUrl, isValidUrl } from "@/lib/urlAnalyzer";
 
@@ -436,7 +436,7 @@ export default function KnowledgeWorkspace() {
 
   function NoteHeader() {
     if (!selectedNote) return (
-      <div className="p-6 text-slate-500">左の索引から項目を選ぶか、[add]で新規作成してください。</div>
+      <div className="p-6 text-slate-500">右の索引から項目を選ぶか、[add]で新規作成してください。</div>
     );
     return (
       <div className="flex items-center justify-between p-4 border-b">
@@ -461,7 +461,7 @@ export default function KnowledgeWorkspace() {
     return (
       <div className="p-6">
         <Card>
-          <CardContent className="pt-6">
+          <CardContent className="">
             {selectedNote.content ? (
               <div className="prose prose-slate max-w-none leading-7">
                 <ReactMarkdown
