@@ -48,7 +48,7 @@ export async function POST(request: Request) {
       
       // Content-Typeからcharsetを抽出
       const contentTypeCharset = contentType.match(/charset=([^;]+)/i);
-      let detectedCharset = contentTypeCharset ? contentTypeCharset[1].trim() : null;
+      const detectedCharset = contentTypeCharset ? contentTypeCharset[1].trim() : null;
       
       // 複数のエンコーディングを試行する関数
       function tryDecodeWithCharsets(buffer: ArrayBuffer): string {

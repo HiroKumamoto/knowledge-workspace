@@ -480,7 +480,7 @@ export default function KnowledgeWorkspace() {
                     </a>
                   ),
                   img: ({ src, alt, ...props }) => {
-                    const { width, height, ...imageProps } = props;
+                    const { width: _width, height: _height, ...imageProps } = props;
                     return (
                       <Image
                         src={typeof src === 'string' ? src : ''}
@@ -856,7 +856,7 @@ export default function KnowledgeWorkspace() {
                             </li>
                           ),
                           img: ({ src, alt, ...props }) => {
-                            const { width, height, ...imageProps } = props;
+                            const { width: _width, height: _height, ...imageProps } = props;
                             return (
                               <Image
                                 src={typeof src === 'string' ? src : ''}
