@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// 許可するIPアドレス（環境変数からも設定可能）
-const ALLOWED_IPS = process.env.ALLOWED_IPS 
-  ? process.env.ALLOWED_IPS.split(',').map(ip => ip.trim())
-  : ['162.120.184.17', '150.249.192.229'];
+// 許可するIPアドレス - 直接ハードコードで確実に設定
+const ALLOWED_IPS = ['162.120.184.17', '150.249.192.229'];
 
 // 開発環境では制限を無効化
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -37,27 +35,7 @@ export function middleware(request: NextRequest) {
     clientIp = xOriginalForwardedFor.split(',')[0]?.trim();
   }
 
-  // デバッグ用: すべてのヘッダーを表示
-  const allHeaders: { [key: string]: string | null } = {};
-  request.headers.forEach((value, key) => {
-    if (key.toLowerCase().includes('ip') || key.toLowerCase().includes('forward') || key.toLowerCase().includes('client')) {
-      allHeaders[key] = value;
-    }
-  });
-  
-  console.log(`All IP-related headers:`, allHeaders);
-  console.log(`Parsed IP values:`, {
-    'x-forwarded-for': xForwardedFor,
-    'x-real-ip': xRealIp,
-    'x-client-ip': xClientIp,
-    'cf-connecting-ip': cfConnectingIp,
-    'x-original-forwarded-for': xOriginalForwardedFor,
-    'detected-client-ip': clientIp
-  });
-  
-  console.log(`Access attempt from IP: ${clientIp}`);
-  console.log(`Allowed IPs: ${JSON.stringify(ALLOWED_IPS)}`);
-  console.log(`Environment ALLOWED_IPS: ${process.env.ALLOWED_IPS || 'NOT SET'}`);
+  console.log(`🔍 IP Check - Client: ${clientIp}, Allowed: ${JSON.stringify(ALLOWED_IPS)}, Match: ${ALLOWED_IPS.includes(clientIp)}`);
 
   // 許可されたIPかチェック
   if (!ALLOWED_IPS.includes(clientIp)) {
