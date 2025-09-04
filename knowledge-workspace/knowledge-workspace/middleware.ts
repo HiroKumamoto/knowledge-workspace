@@ -57,6 +57,17 @@ export function middleware(request: NextRequest) {
   
   console.log(`Access attempt from IP: ${clientIp}`);
 
+  // デバッグ用: 一時的にIP制限を無効化してログのみ出力
+  if (!ALLOWED_IPS.includes(clientIp)) {
+    console.log(`⚠️ Access would be denied for IP: ${clientIp} (but allowing for debugging)`);
+  } else {
+    console.log(`✅ Access granted for IP: ${clientIp}`);
+  }
+  
+  // 一時的に全てのアクセスを許可（デバッグ用）
+  return NextResponse.next();
+  
+  /* 実際の制限コード（デバッグ完了後に有効化）
   // 許可されたIPかチェック
   if (!ALLOWED_IPS.includes(clientIp)) {
     console.log(`Access denied for IP: ${clientIp}`);
@@ -79,11 +90,12 @@ export function middleware(request: NextRequest) {
 
   console.log(`Access granted for IP: ${clientIp}`);
   return NextResponse.next();
+  */
 }
 
 export const config = {
   matcher: [
-    // すべてのパスに適用（静的ファイルとAPIルートを除く）
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    // すべてのパスに適用（静的ファイルのみ除外）
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.gif|.*\\.svg|.*\\.ico).*)',
   ],
 };
