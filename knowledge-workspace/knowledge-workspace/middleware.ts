@@ -35,8 +35,6 @@ export function middleware(request: NextRequest) {
     clientIp = cfConnectingIp.trim();
   } else if (xOriginalForwardedFor) {
     clientIp = xOriginalForwardedFor.split(',')[0]?.trim();
-  } else if (request.ip) {
-    clientIp = request.ip;
   }
 
   // デバッグ用: すべてのヘッダーを表示
@@ -54,7 +52,6 @@ export function middleware(request: NextRequest) {
     'x-client-ip': xClientIp,
     'cf-connecting-ip': cfConnectingIp,
     'x-original-forwarded-for': xOriginalForwardedFor,
-    'request.ip': request.ip,
     'detected-client-ip': clientIp
   });
   
