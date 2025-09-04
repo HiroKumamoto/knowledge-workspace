@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // 許可するIPアドレス（環境変数からも設定可能）
 const ALLOWED_IPS = process.env.ALLOWED_IPS 
   ? process.env.ALLOWED_IPS.split(',').map(ip => ip.trim())
-  : ['162.120.184.17'];
+  : ['162.120.184.17', '150.249.192.229'];
 
 // 開発環境では制限を無効化
 const isDevelopment = process.env.NODE_ENV === 'development';
