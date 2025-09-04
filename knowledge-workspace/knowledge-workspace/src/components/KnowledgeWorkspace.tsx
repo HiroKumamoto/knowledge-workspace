@@ -264,6 +264,13 @@ export default function KnowledgeWorkspace() {
       setSelectedNoteId(null);
       setRenameProjectId(projectId);
       setProjectNameDraft("新規プロジェクト");
+      
+      // 新しいタブを一番左に移動
+      setTimeout(() => {
+        if (tabsContainerRef.current) {
+          tabsContainerRef.current.scrollLeft = 0;
+        }
+      }, 100);
     }
   };
 
@@ -316,7 +323,7 @@ export default function KnowledgeWorkspace() {
   function ProjectTabs() {
     return (
       <div className="w-full border-b bg-white/70 backdrop-blur sticky top-0 z-30">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-2 overflow-x-auto">
+        <div ref={tabsContainerRef} className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-2 overflow-x-auto">
           <span className="font-semibold mr-2">プロジェクト:</span>
           <div className="flex gap-2 items-center">
             {projects.map(p => (
@@ -587,6 +594,7 @@ export default function KnowledgeWorkspace() {
   const titleInputRef = useRef<HTMLInputElement>(null);
   const contentInputRef = useRef<HTMLTextAreaElement>(null);
   const projectNameInputRef = useRef<HTMLInputElement>(null);
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
 
   function NoteDialog() {
     const [previewContent, setPreviewContent] = useState(draft.content);
@@ -670,9 +678,21 @@ export default function KnowledgeWorkspace() {
         const noteId = await createNote(activeProject.id, title, content);
         if (noteId) {
           const newNote: Note = { id: noteId, title, content, updatedAt: Date.now() };
-          setProjects(prev => prev.map(p => 
-            p.id === activeProject.id ? { ...p, notes: [newNote, ...p.notes] } : p
-          ));
+          setProjects(prev => {
+            // 新しい項目が追加されたプロジェクトを一番左に移動
+            const activeProj = prev.find(p => p.id === activeProject.id);
+            const otherProjects = prev.filter(p => p.id !== activeProject.id);
+            const updatedActiveProject = activeProj ? { ...activeProj, notes: [newNote, ...activeProj.notes] } : null;
+            
+            return updatedActiveProject ? [updatedActiveProject, ...otherProjects] : prev;
+          });
+          
+          // タブコンテナを一番左にスクロール
+          setTimeout(() => {
+            if (tabsContainerRef.current) {
+              tabsContainerRef.current.scrollLeft = 0;
+            }
+          }, 100);
         }
       }
       
