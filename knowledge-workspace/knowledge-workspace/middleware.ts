@@ -57,27 +57,17 @@ export function middleware(request: NextRequest) {
   
   console.log(`Access attempt from IP: ${clientIp}`);
 
-  // デバッグ用: 一時的にIP制限を無効化してログのみ出力
-  if (!ALLOWED_IPS.includes(clientIp)) {
-    console.log(`⚠️ Access would be denied for IP: ${clientIp} (but allowing for debugging)`);
-  } else {
-    console.log(`✅ Access granted for IP: ${clientIp}`);
-  }
-  
-  // 一時的に全てのアクセスを許可（デバッグ用）
-  return NextResponse.next();
-  
-  /* 実際の制限コード（デバッグ完了後に有効化）
   // 許可されたIPかチェック
   if (!ALLOWED_IPS.includes(clientIp)) {
-    console.log(`Access denied for IP: ${clientIp}`);
+    console.log(`🚫 Access denied for IP: ${clientIp}`);
     
     // アクセス拒否レスポンス
     return new NextResponse(
       JSON.stringify({
         error: 'Access Denied',
         message: 'このIPアドレスからのアクセスは許可されていません',
-        ip: clientIp
+        ip: clientIp,
+        allowedIPs: ALLOWED_IPS
       }),
       {
         status: 403,
@@ -88,9 +78,8 @@ export function middleware(request: NextRequest) {
     );
   }
 
-  console.log(`Access granted for IP: ${clientIp}`);
+  console.log(`✅ Access granted for IP: ${clientIp}`);
   return NextResponse.next();
-  */
 }
 
 export const config = {
