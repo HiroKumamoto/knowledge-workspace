@@ -56,6 +56,8 @@ export function middleware(request: NextRequest) {
   });
   
   console.log(`Access attempt from IP: ${clientIp}`);
+  console.log(`Allowed IPs: ${JSON.stringify(ALLOWED_IPS)}`);
+  console.log(`Environment ALLOWED_IPS: ${process.env.ALLOWED_IPS || 'NOT SET'}`);
 
   // 許可されたIPかチェック
   if (!ALLOWED_IPS.includes(clientIp)) {
